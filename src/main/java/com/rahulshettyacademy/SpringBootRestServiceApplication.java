@@ -12,7 +12,8 @@ import com.rahulshettyacademy.repository.LibraryRepository;
 
 
 @SpringBootApplication
-public class SpringBootRestServiceApplication {
+public class SpringBootRestServiceApplication // implements CommandLineRunner
+{
 	
 	@Autowired
 	LibraryRepository repository;
@@ -21,30 +22,33 @@ public class SpringBootRestServiceApplication {
 		SpringApplication.run(SpringBootRestServiceApplication.class, args);
 	}
 	
-	//@Override
+//	@Override
 //	public void run(String[] args)
 //	{
-//		Library lib= repository.findById("fdsefr343").get();
-//		System.out.println(lib.getAuthor());
-//		Library en =new Library();
-//		en.setAisle(123);
-//		en.setAuthor("Rahul");
-//		en.setBook_name("Devops");
-//		en.setIsbn("lkhs");
-//		en.setId("lkhs123");
-//		//repository.save(en);
-//		List<Library> allrecords =repository.findAll();
-//		//
-//		for(Library item : allrecords)
-//		{
-//			System.out.println(item.getBook_name());
-//		}
-//		repository.delete(en);
-//		
-//		}
-	
-	
-	
-	   
+
+/*		System.out.println(".......find by id.......");
+		Library lib= repository.findById("studio2222").get();
+		System.out.println(lib.getAuthor());*/
+
+/*		System.out.println(".......save.......");
+		Library en =new Library();
+		en.setAisle(1232211);
+		en.setAuthor("omid");
+		en.setBook_name("omidbook");
+		en.setIsbn("lkhs");
+		en.setId("lkhs123");
+		repository.save(en);*/
+
+/*		System.out.println(".......find all.......");
+		List<Library> allrecords =repository.findAll();
+		for(Library item : allrecords)
+		{
+			System.out.println(item.getBook_name());
+		}*/
+
+/*		System.out.println(".......delete.......");
+		repository.delete(en);*/
+
+//	}
 
 }
