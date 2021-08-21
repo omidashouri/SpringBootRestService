@@ -2,6 +2,8 @@ package com.rahulshettyacademy.controller;
 
 import java.util.List;
 
+import lombok.extern.log4j.Log4j;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.rahulshettyacademy.repository.LibraryRepository;
 import com.rahulshettyacademy.service.LibraryService;
 
-
+@Slf4j
 @RestController
 public class LibraryController {
 
@@ -30,7 +32,7 @@ public class LibraryController {
     @Autowired
     LibraryService libraryService;
 
-    private static final Logger logger = LoggerFactory.getLogger(LibraryController.class);
+//    private static final Logger logger = LoggerFactory.getLogger(LibraryController.class);
 
     @PostMapping("/addBook")
     public ResponseEntity addBookImplementation(@RequestBody Library library) {
@@ -39,7 +41,7 @@ public class LibraryController {
 
         if (!libraryService.checkBookAlreadyExist(id))//mock
         {
-            logger.info("Book do not exist so creating one");
+            log.info("Book do not exist so creating one");
             library.setId(id);
             repository.save(library);//mock
             HttpHeaders headers = new HttpHeaders();
@@ -50,7 +52,7 @@ public class LibraryController {
             //return ad;
             return new ResponseEntity<AddResponse>(ad, headers, HttpStatus.CREATED);
         } else {
-            logger.info("Book  exist so skipping creation");
+            log.info("Book  exist so skipping creation");
             ad.setMsg("Book already exist");
             ad.setId(id);
             return new ResponseEntity<AddResponse>(ad, HttpStatus.ACCEPTED);
@@ -95,7 +97,7 @@ public class LibraryController {
         Library libdelete = libraryService.getBookById(library.getId());//mock
         repository.delete(libdelete);
 
-        logger.info("Book  is deleted ");
+        log.info("Book  is deleted ");
         return new ResponseEntity<>("Book is deleted", HttpStatus.CREATED);
 
     }
