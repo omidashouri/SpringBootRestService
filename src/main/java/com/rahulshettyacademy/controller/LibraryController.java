@@ -36,6 +36,7 @@ public class LibraryController {
 
     @PostMapping("/addBook")
     public ResponseEntity addBookImplementation(@RequestBody Library library) {
+
         String id = libraryService.buildId(library.getIsbn(), library.getAisle());//dependenyMock
         AddResponse ad = new AddResponse();
 
