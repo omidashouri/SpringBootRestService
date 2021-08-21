@@ -1,14 +1,13 @@
 package com.rahulshettyacademy.repository;
 
+import com.rahulshettyacademy.controller.Library;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.rahulshettyacademy.controller.Library;
-
 public class LibraryRepositoryImpl implements LibraryRepositoryCustom{
-	
+
 	@Autowired
 	LibraryRepository repository;
 
@@ -19,15 +18,15 @@ public class LibraryRepositoryImpl implements LibraryRepositoryCustom{
 		List<Library>books =repository.findAll();
 		for(Library item : books)
 //			{
-	if(item.getAuthor().equalsIgnoreCase(authorName))
-	{
-		bookswithAuthor.add(item);
-	}
+			if(item.getAuthor().equalsIgnoreCase(authorName))
+			{
+				bookswithAuthor.add(item);
+			}
 //			}
-		
+
 		return bookswithAuthor;
 	}
-	
-	
+
+
 
 }
