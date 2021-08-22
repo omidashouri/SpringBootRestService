@@ -18,6 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
@@ -59,13 +61,16 @@ class LibraryControllerTest {
         String jsonObject = objectMapper.writeValueAsString(library);
 
 
-        when(libraryService.buildId(anyString(),anyInt())).thenReturn("1");
-        when(libraryService.checkBookAlreadyExist("1")).thenReturn(false);
+        when(libraryService.buildId(anyString(),anyInt())).thenReturn(library.getId());
+        when(libraryService.checkBookAlreadyExist(library.getId())).thenReturn(false);
         when(libraryRepository.save(any())).thenReturn(library);
         this.mockMvc.perform(post("/addBook")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .content(jsonObject))
-                    .andExpect(status().isCreated());
+                .andDo(print())
+                .andExpect(status().isCreated())
+//                get json Object parameter with jsonPath from json object
+                .andExpect(jsonPath("$.id").value(library.getId()));
     }
 
     @Disabled
