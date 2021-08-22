@@ -14,13 +14,22 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.hamcrest.CoreMatchers.is;
 
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -78,9 +87,22 @@ class LibraryControllerTest {
     void getBookById() {
     }
 
-    @Disabled
     @Test
-    void getBookByAuthorName() {
+    void getBookByAuthorName() throws Exception {
+        List<Library> libraries = Arrays.asList(this.buildLibrary());
+
+        when(libraryRepository.findAllByAuthor(anyString())).thenReturn(libraries);
+        mockMvc.perform(get("/getBooks/author").param("authorname","omidashouri"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()",is(1)))
+                .andExpect(jsonPath("$[0].id").value(libraries.get(0).getId()))
+                .andExpect(jsonPath("$[0].id",is(libraries.get(0).getId())))
+                .andExpect(jsonPath("$.*").isArray())
+                .andExpect(jsonPath("$.*",is(notNullValue())));
+/*                .andExpect(jsonPath("$.links[0].rel[0]", is("self")))
+                .andExpect(jsonPath("$.links[0].href[0]", is("/"));*/
+
     }
 
     @Disabled
