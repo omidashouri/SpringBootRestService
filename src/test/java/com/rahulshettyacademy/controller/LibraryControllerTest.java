@@ -102,7 +102,6 @@ class LibraryControllerTest {
                 .andExpect(jsonPath("$.*",is(notNullValue())));
 /*                .andExpect(jsonPath("$.links[0].rel[0]", is("self")))
                 .andExpect(jsonPath("$.links[0].href[0]", is("/"));*/
-
     }
 
     @Disabled
