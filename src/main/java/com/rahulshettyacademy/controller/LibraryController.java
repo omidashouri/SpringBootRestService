@@ -32,7 +32,7 @@ public class LibraryController {
 //    private static final Logger logger = LoggerFactory.getLogger(LibraryController.class);
 
     @PostMapping("/addBook")
-    public ResponseEntity addBookImplementation(@RequestBody Library library) {
+    public ResponseEntity<?> addBookImplementation(@RequestBody Library library) {
 
         String id = libraryService.buildId(library.getIsbn(), library.getAisle());//dependenyMock
         AddResponse ad = new AddResponse();
@@ -48,7 +48,7 @@ public class LibraryController {
             ad.setMsg("Success Book is Added");
             ad.setId(id);
             //return ad;
-            return new ResponseEntity<AddResponse>(ad, headers, HttpStatus.CREATED);
+            return new ResponseEntity(ad, headers, HttpStatus.CREATED);
         } else {
             log.info("Book  exist so skipping creation");
             ad.setMsg("Book already exist");
